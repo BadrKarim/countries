@@ -5,7 +5,7 @@ import Card from './Card';
 const Countries = () => {
 
     const [data, setData] = useState([]);
-    const [rangeValue, setRangeValue] = useState(36);
+    const [rangeValue, setRangeValue] = useState(12);
     const [selectedRadio, setSelectedRadio] = useState("");
     const radios = ["Africa", "America", "Asia", "Europe", "Oceania"];
 
@@ -31,16 +31,19 @@ const Countries = () => {
                         type="radio" 
                         id={continent} 
                         name='continentRadio' 
-                        onChange={(e) => setSelectedRadio(e.target.value)}
-                        />
+                        checked={continent === selectedRadio}
+                        onChange={(e) => setSelectedRadio(e.target.id)}
+                    />
                     <label htmlFor={continent}> {continent} </label>
                 </li>
                 ))}
             </ul>
+            {selectedRadio && <button onClick={() => setSelectedRadio("")}>Annuler la recherche</button>}
             <ul>
                 {
                     data
                         .filter((country) => country.continents[0].includes(selectedRadio))
+                        .sort((a, b) => b.population - a.population)
                         .slice(0, rangeValue)
                         .map((country, index) => 
                             (
