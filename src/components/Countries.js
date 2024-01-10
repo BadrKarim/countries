@@ -5,8 +5,8 @@ import Card from './Card';
 const Countries = () => {
 
     const [data, setData] = useState([]);
-    const [rangeValue, setRangeValue] = useState(48);
-    const [selectedRadio, setSelactedRadio] = useState("");
+    const [rangeValue, setRangeValue] = useState(36);
+    const [selectedRadio, setSelectedRadio] = useState("");
     const radios = ["Africa", "America", "Asia", "Europe", "Oceania"];
 
     useEffect(() => {
@@ -24,29 +24,29 @@ const Countries = () => {
                     max='250' 
                     defaultValue={rangeValue}
                     onChange={(e) => setRangeValue(e.target.value)}
-                 />
-                 {radios.map((continent) => (
-                    <li>
-                        <input 
-                            type="radio" 
-                            id={continent} 
-                            name='continentRadio' 
-                            onChange={(e) => setSelactedRadio(e.target.value)}
-                            />
-                        <label htmlFor={continent}> {continent} </label>
-                    </li>
-                 ))}
+                />
+                {radios.map((continent) => (
+                <li key={continent}>
+                    <input 
+                        type="radio" 
+                        id={continent} 
+                        name='continentRadio' 
+                        onChange={(e) => setSelectedRadio(e.target.value)}
+                        />
+                    <label htmlFor={continent}> {continent} </label>
+                </li>
+                ))}
             </ul>
             <ul>
                 {
                     data
-                    .filter((country) => country.continents[0].includes(selectedRadio))
-                    .slice(0, rangeValue)
-                    .map((country, index) => 
-                        (
-                            <Card key={index} country={country} />
+                        .filter((country) => country.continents[0].includes(selectedRadio))
+                        .slice(0, rangeValue)
+                        .map((country, index) => 
+                            (
+                                <Card key={index} country={country} />
+                            )
                         )
-                    )
                 }
             </ul>
         </div>
